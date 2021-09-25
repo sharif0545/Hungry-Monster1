@@ -1,0 +1,66 @@
+.food-menu{
+    display: flex;
+}
+#display-items {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 20px;
+	width: 60%;
+	margin: 50px 0px 0 70px;
+}
+#display-item-single {
+	width: 30%;
+	position: fixed;
+	top: 20px;
+	left: 70%;
+}
+#display-items img{
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+}
+.item-single {
+	cursor: pointer;
+	background-color: #d3d3d37d;
+	width: 100%;
+	text-align: center;
+    border-radius: 5px;
+   
+}
+.display-item-details img {
+	width: 70%;
+    border-radius: 5px;
+}
+.display-item-details li{
+    list-style: none;
+}
+.ingrediants{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+      
+}
+.seacrh-food{
+    width: 50%;
+    margin: 30px auto;
+}
+#searchInput{
+    width: 30%;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+#searchBtn{
+    padding: 10px 10px;
+    background-color: rgb(248, 78, 10);
+    border-radius: 5px;
+    border: none;
+    color: rgb(245, 245, 250);
+    cursor: pointer;
+    font-size: 16px;
+}
+.ruler {
+	width: 1px;
+	height: auto;
+	background-color: lightgray;
+	border-radius: 5px;
+	margin-left: 40px;
+ 
+}
