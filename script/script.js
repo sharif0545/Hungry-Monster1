@@ -1,31 +1,51 @@
 document.getElementById('searchBtn').addEventListener('click', function(){
-    const searchCategory = document.getElementById('searchInput').value;
+    const searchCategory = document.getElementById('searchInput').value;   
     const searchURL = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${searchCategory}`;
-    if(!searchCategory){
-        alert('Please search by country category.');
+    if(!searchCategory){   
+        document.getElementById('wrongSearch').innerHTML = 'Please search by country category.';
+        document.getElementById('display-items').innerHTML = '';
+        document.getElementById('display-item-single').innerHTML = '';
+        document.getElementById('country-foods').innerHTML = '';
     }else{
         fetch(searchURL)
         .then(res => res.json())
         .then(data => {
-            const menu = data.meals;
-                displayAllItems(menu);
+             const menu = data.meals;
+              displayAllItems(menu);
+        })
+        .catch(error => {
+            showError('Sorry your search category can not reach.');
         })
         document.getElementById('searchInput').value = '';
         document.getElementById('display-item-single').innerHTML = '';
+        document.getElementById('wrongSearch').innerHTML = '';
     }
         
 });
 
 const displayAllItems = allItems => {
     if(allItems == null){
-        alert('Search items are not found.');
+        document.getElementById('notFound').innerHTML = 'Search items are not found.';
+        document.getElementById('display-items').innerHTML = '';
+        document.getElementById('country-foods').innerHTML = '';
     }else{
     let showAllItems = '';
     allItems.forEach(items =>{
         const itemName = items.strMeal;
         const itemID = items.idMeal;
         const itemImg = items.strMealThumb;
-        const displayItems = document.getElementById('display-items');
+        const searchCategory = document.getElementById('searchInput').value;    
+       // for dynamic name of  categorized foods 
+        const itemURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${itemID}`;
+        fetch(itemURL)
+        .then(res => res.json())
+        .then(data => {
+            const itemDetails = data.meals;
+            const countryItemName = itemDetails[0].strArea;
+            document.getElementById('country-foods').innerHTML = countryItemName + ' foods'
+        })
+         // for dynamic name of  categorized foods 
+        
         const showItem = `
             <div class="item-single" onclick="displaySingleItem('${itemID}')">
                 <img src="${itemImg}"/>
@@ -33,8 +53,9 @@ const displayAllItems = allItems => {
             </div>
         `;
         showAllItems += showItem;
-        displayItems.innerHTML = showAllItems;
+        document.getElementById('display-items').innerHTML = showAllItems;
     });
+    document.getElementById('notFound').innerHTML = '';
     }
 
 }
@@ -47,48 +68,58 @@ const itemURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`
         const itemDetails = data.meals;
         displaySingleItemDetails(itemDetails);
     })
+    .catch(error => {
+        showError('Sorry your selected item is not found.');
+    })
 }
 
 const displaySingleItemDetails = details => {
     details.forEach(items =>{
-        const displayItemSingle = document.getElementById('display-item-single');
         const itemDisplay = `
             <div class="display-item-details">
-                <h1>Display item detail</h1>
+                <h1 id="single-food-display">Display ${items.strArea} food detail</h1>
                 <img src="${items.strMealThumb}"/>
                 <h2>${items.strMeal}</h2>
                 <h3>Ingredients</h3>
                 <div class="ingrediants">
                     <div>
-                        <li>${items.strIngredient1}</li>
-                        <li>${items.strIngredient2}</li>
-                        <li>${items.strIngredient3}</li>
-                        <li>${items.strIngredient4}</li>
-                        <li>${items.strIngredient5}</li>
-                        <li>${items.strIngredient6}</li>
-                        <li>${items.strIngredient7}</li>
-                        <li>${items.strIngredient8}</li>
-                        <li>${items.strIngredient9}</li>
-                        <li>${items.strIngredient10}</li>
+                        <ul>
+                            <li>${items.strIngredient1}</li>
+                            <li>${items.strIngredient2}</li>
+                            <li>${items.strIngredient3}</li>
+                            <li>${items.strIngredient4}</li>
+                            <li>${items.strIngredient5}</li>
+                            <li>${items.strIngredient6}</li>
+                            <li>${items.strIngredient7}</li>
+                            <li>${items.strIngredient8}</li>
+                            <li>${items.strIngredient9}</li>
+                            <li>${items.strIngredient10}</li>
+                        </ul>
 
                     </div>
                     <div>
-                        <li>${items.strIngredient11}</li>
-                        <li>${items.strIngredient12}</li>
-                        <li>${items.strIngredient13}</li>
-                        <li>${items.strIngredient14}</li>
-                        <li>${items.strIngredient15}</li>
-                        <li>${items.strIngredient16}</li>
-                        <li>${items.strIngredient17}</li>
-                        <li>${items.strIngredient18}</li>
-                        <li>${items.strIngredient19}</li>
-                        <li>${items.strIngredient20}</li>
+                        <ul>
+                            <li>${items.strIngredient11}</li>
+                            <li>${items.strIngredient12}</li>
+                            <li>${items.strIngredient13}</li>
+                            <li>${items.strIngredient14}</li>
+                            <li>${items.strIngredient15}</li>
+                            <li>${items.strIngredient16}</li>
+                            <li>${items.strIngredient17}</li>
+                            <li>${items.strIngredient18}</li>
+                            <li>${items.strIngredient19}</li>
+                            <li>${items.strIngredient20}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         `;
-        displayItemSingle.innerHTML = itemDisplay;
+        document.getElementById('display-item-single').innerHTML = itemDisplay;
     });
+}
+
+const showError = error => {
+    document.getElementById('errorMessage').innerHTML = error;
 }
 
 
