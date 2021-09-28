@@ -6,12 +6,17 @@ document.getElementById('searchBtn').addEventListener('click', function(){
         document.getElementById('display-items').innerHTML = '';
         document.getElementById('display-item-single').innerHTML = '';
         document.getElementById('country-foods').innerHTML = '';
+        document.getElementById('notFound').innerHTML = '';
     }else{
         fetch(searchURL)
         .then(res => res.json())
         .then(data => {
+            if(data.length == 0){
+                showError('wrong');
+            }else{
              const menu = data.meals;
               displayAllItems(menu);
+            }
         })
         .catch(error => {
             showError('Sorry your search category can not reach.');

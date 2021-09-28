@@ -72,14 +72,26 @@ body{
 	border-radius: 5px;
 	margin-left: 40px;
 }
+#wrongSearch{
+    color: red;
+    top: 150px;
+}
 #wrongSearch,
 #notFound,
 #errorMessage{
     font-size: 40px;
-    color: red;
     position: fixed;
-    top: 150px;
     left: 25%;
+}
+
+#errorMessage{
+    color: rgb(68, 84, 221);
+    top: 170px;
+}
+
+#notFound{
+    color: rgb(122, 42, 112);
+    top: 180px;
 }
 #country-foods{
     font-size: 50px;
