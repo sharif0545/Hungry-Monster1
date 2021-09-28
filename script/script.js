@@ -11,12 +11,8 @@ document.getElementById('searchBtn').addEventListener('click', function(){
         fetch(searchURL)
         .then(res => res.json())
         .then(data => {
-            if(data.length == 0){
-                showError('wrong');
-            }else{
-             const menu = data.meals;
-              displayAllItems(menu);
-            }
+            const menu = data.meals;
+            displayAllItems(menu);
         })
         .catch(error => {
             showError('Sorry your search category can not reach.');
